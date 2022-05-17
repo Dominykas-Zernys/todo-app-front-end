@@ -1,13 +1,16 @@
 import styled from 'styled-components';
+import pageColors from '../../helpers/pageColors';
 
 export const Navigation = styled.div`
-  background-color: green;
+  background-color: ${pageColors.primary};
+  box-shadow: 0 5px 10px ${pageColors.shadow};
+
   & .nav-wrapper {
-    width: 70%;
+    width: 80%;
     margin: auto;
     display: flex;
     justify-content: right;
-    padding: 0.75rem 0;
+    padding: 1rem 0;
   }
 
   & nav {
@@ -15,12 +18,16 @@ export const Navigation = styled.div`
   }
 
   & nav > a {
-    padding: 0.75rem 0.5rem;
+    padding: 1rem;
     height: 100%;
     text-decoration: none;
-    color: white;
+    color: ${pageColors.background};
     :hover {
-      background-color: #063806;
+      background-color: ${pageColors.hover};
     }
+  }
+
+  & .active {
+    background-color: ${pageColors.secondary};
   }
 `;

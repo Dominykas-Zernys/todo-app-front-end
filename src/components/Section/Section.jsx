@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as S from './Section.style';
 
-const Section = ({ children, maxWidth, padding, background, shadow }) => {
+const Section = ({ children, width, padding, background, shadow, height }) => {
   return (
     <S.Section
       background={background}
       shadow={shadow}
-      maxWidth={maxWidth}
+      width={width}
       padding={padding}
+      height={height}
     >
       {children}
     </S.Section>
@@ -17,10 +18,11 @@ const Section = ({ children, maxWidth, padding, background, shadow }) => {
 
 Section.propTypes = {
   children: PropTypes.node.isRequired,
-  maxWidth: PropTypes.string,
+  width: PropTypes.string,
   padding: PropTypes.string,
   background: PropTypes.string,
   shadow: PropTypes.string,
+  height: PropTypes.string,
 };
 
 export default Section;

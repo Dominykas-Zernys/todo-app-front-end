@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Task from '../Task/Task';
+import * as S from './TaskList.style';
 
 const TaskList = ({ tasks }) => {
   return (
-    <div>
+    <S.TaskList>
+      <h3>To-dos:</h3>
       {tasks.map((taskObj) => (
-        <Task task={taskObj.task} />
+        <Task key={taskObj.id} task={taskObj.task} />
       ))}
-    </div>
+    </S.TaskList>
   );
 };
 

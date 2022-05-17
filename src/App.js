@@ -1,10 +1,10 @@
 import './App.css';
-import Button from './components/Button/Button';
+import Router from './Router';
 
 function App() {
   return (
     <div className='App'>
-      <Button>button</Button>
+      <Router />
     </div>
   );
 }

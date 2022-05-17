@@ -6,12 +6,14 @@ export const Button = styled.button`
   color: white;
   border: none;
   font-family: inherit;
+  cursor: pointer;
+  margin: 0 1rem;
 
   &:hover {
-    opacity: 0.65;
+    opacity: 0.75;
   }
 
   &:active {
-    background-color: ${(props) => props.activeColor};
+    opacity: 1;
   }
 `;
