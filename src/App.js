@@ -1,7 +1,12 @@
 import './App.css';
+import Button from './components/Button/Button';
 
 function App() {
-  return <div className='App'>ddddddd</div>;
+  return (
+    <div className='App'>
+      <Button>button</Button>
+    </div>
+  );
 }
 
 export default App;
