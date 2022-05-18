@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button/Button';
 import Header from '../components/Header/Header';
 import Input from '../components/Input/Input';
+import Popup from '../components/Popup/Popup';
 import Section from '../components/Section/Section';
 import TaskList from '../components/TaskList/TaskList';
 import { fetchDelete, fetchGet, fetchPost } from '../helpers/fetchFunctions';
@@ -16,6 +17,7 @@ const Home = () => {
   const [taskArray, setTaskArray] = useState([]);
   const [checkedTasks, setCheckedTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
 
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(UserContext);
@@ -37,16 +39,7 @@ const Home = () => {
   );
 
   function handleDeleteClick() {
-    if (!checkedTasks.length) return;
-    checkedTasks.map(async (task) => {
-      const deleteResult = await fetchDelete('tasks/', task);
-      if (deleteResult.success) {
-        setTaskArray((prevState) =>
-          prevState.filter((taskObj) => taskObj.id !== task)
-        );
-        setCheckedTasks([]);
-      }
-    });
+    checkedTasks.length && setShowPopup(true);
   }
 
   async function submitHandler(e) {
@@ -70,6 +63,14 @@ const Home = () => {
 
   return (
     <Section className='responsive-container' padding='5rem' height='100vh'>
+      {showPopup && (
+        <Popup
+          checkedTasks={checkedTasks}
+          setTaskArray={setTaskArray}
+          setCheckedTasks={setCheckedTasks}
+          setShowPopup={setShowPopup}
+        />
+      )}
       <Section
         className='responsive-wrapper'
         width='50%'
