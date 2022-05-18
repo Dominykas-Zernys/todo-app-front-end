@@ -36,10 +36,11 @@ const Task = ({ task, taskId, setTaskArray, setCheckedTasks }) => {
   );
 };
 
-// Task.propTypes = {
-//   task: PropTypes.string.isRequired,
-//   taskId: PropTypes.number.isRequired,
-//   setTaskArray: PropTypes.func.isRequired,
-// };
+Task.propTypes = {
+  task: PropTypes.string.isRequired,
+  taskId: PropTypes.number.isRequired,
+  setTaskArray: PropTypes.func.isRequired,
+  setCheckedTasks: PropTypes.func.isRequired,
+};
 
 export default Task;

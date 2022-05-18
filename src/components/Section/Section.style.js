@@ -46,6 +46,13 @@ export const Section = styled.div`
     }
   }
 
+  & .no-todos-text {
+    color: ${pageColors.primary};
+    font-size: 0.85rem;
+    padding-bottom: 1rem;
+    display: inline-block;
+  }
+
   & .task-submit-text {
     padding-left: 1rem;
 
