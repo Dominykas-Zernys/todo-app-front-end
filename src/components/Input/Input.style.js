@@ -4,9 +4,9 @@ import pageColors from '../../helpers/pageColors';
 export const Input = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-  gap: 0.5rem;
   flex: 1;
+  gap: 0.5rem;
+  padding: 1rem;
 
   & label {
     color: ${pageColors.primary};
@@ -15,10 +15,10 @@ export const Input = styled.div`
   }
 
   & input {
-    padding: 0.25rem 0;
+    background-color: inherit;
     border: none;
     border-bottom: 1px solid ${pageColors.primary};
-    background-color: inherit;
+    padding: 0.25rem 0;
 
     &:focus {
       outline: none;

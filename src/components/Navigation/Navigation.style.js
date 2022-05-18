@@ -6,11 +6,11 @@ export const Navigation = styled.div`
   box-shadow: 0 5px 10px ${pageColors.shadow};
 
   & .nav-wrapper {
-    width: 80%;
-    margin: auto;
     display: flex;
     justify-content: right;
+    margin: auto;
     padding: 1rem 0;
+    width: 80%;
   }
 
   & nav {
@@ -18,10 +18,11 @@ export const Navigation = styled.div`
   }
 
   & nav > a {
-    padding: 1rem;
-    height: 100%;
-    text-decoration: none;
     color: ${pageColors.background};
+    height: 100%;
+    padding: 1rem;
+    text-decoration: none;
+
     :hover {
       background-color: ${pageColors.hover};
     }

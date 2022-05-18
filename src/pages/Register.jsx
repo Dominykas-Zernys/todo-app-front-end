@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Section from '../components/Section/Section';
 import pageColors from '../helpers/pageColors';
 import Header from '../components/Header/Header';
 import Input from '../components/Input/Input';
 import Button from '../components/Button/Button';
+import { fetchPost } from '../helpers/fetchFunctions';
+import UserContext, { formatErrorMsg } from '../helpers/helperFunctions';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [regFail, setRegFail] = useState(false);
   const [regSuccess, setRegSuccess] = useState(false);
+  const [failMessage, setFailMessage] = useState('');
 
-  function submitHandler(e) {
+  const navigate = useNavigate();
+  const { isLoggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    isLoggedIn && navigate('../', { replace: true });
+  }, [isLoggedIn]);
+
+  async function submitHandler(e) {
     setRegFail(false);
     setRegSuccess(false);
     e.preventDefault();
@@ -19,15 +30,21 @@ const Register = () => {
       setRegFail(true);
       return;
     }
-    console.log({ email, password });
-    setRegSuccess(true);
-    setEmail('');
-    setPassword('');
+    const postResult = await fetchPost('auth/register', { email, password });
+    if (postResult.success) {
+      setRegSuccess(true);
+      setEmail('');
+      setPassword('');
+      return;
+    }
+    setFailMessage(formatErrorMsg(postResult.msg));
+    setRegFail(true);
   }
 
   return (
-    <Section padding='5rem' height='100vh'>
+    <Section padding='5rem' height='100vh' className='responsive-container'>
       <Section
+        className='responsive-wrapper'
         width='40%'
         background={pageColors.background}
         shadow={`10px 10px 10px ${pageColors.shadow}`}
@@ -64,7 +81,7 @@ const Register = () => {
               <span className='fail-text'>
                 {!email.length || !password.length
                   ? 'You have to fill in all the fields!'
-                  : 'Some fields are not filled in correctly!'}
+                  : failMessage}
               </span>
             )}
           </Section>

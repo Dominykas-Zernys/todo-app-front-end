@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 export const Button = styled.button`
-  padding: 1rem 2rem;
   background-color: ${(props) => props.color};
-  color: white;
   border: none;
-  font-family: inherit;
+  color: white;
   cursor: pointer;
+  font-family: inherit;
   margin: 0 1rem;
+  padding: 1rem 2rem;
 
   &:hover {
     opacity: 0.75;

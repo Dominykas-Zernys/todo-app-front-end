@@ -1,31 +1,76 @@
 import styled from 'styled-components';
 import pageColors from '../../helpers/pageColors';
 
+function convertWidth(width, x) {
+  if (width && width.includes('%')) {
+    const widthNumber = width.split('%')[0];
+    const newWidth = Number(widthNumber) * x + '%';
+    return newWidth;
+  }
+  return width;
+}
+
 export const Section = styled.div`
-  width: ${(props) => props.width};
-  padding: ${(props) => props.padding};
-  margin: auto;
   background-color: ${(props) => props.background};
   box-shadow: ${(props) => props.shadow};
   height: ${(props) => props.height};
+  margin: auto;
+  padding: ${(props) => props.padding};
+  width: ${(props) => props.width};
+  position: relative;
+
+  & h3 {
+    color: ${pageColors.primary};
+    font-size: 1.25rem;
+  }
 
   & .flex-table {
-    display: flex;
     align-items: center;
+    display: flex;
   }
 
   & .success-text {
-    font-size: 0.85rem;
     color: ${pageColors.hover};
+    font-size: 0.85rem;
+    position: absolute;
   }
 
   & .fail-text {
-    font-size: 0.85rem;
     color: ${pageColors.secondary};
+    font-size: 0.85rem;
+    display: inline-block;
+    width: 60%;
+    position: absolute;
+    @media only screen and (max-width: 560px) {
+      width: 45%;
+    }
   }
 
-  & .absolute {
-    position: absolute;
-    padding: 0 1rem;
+  & .task-submit-text {
+    padding-left: 1rem;
+
+    @media only screen and (max-width: 560px) {
+      width: 100%;
+    }
+  }
+
+  &.responsive-wrapper {
+    @media only screen and (max-width: 560px) {
+      width: 100%;
+    }
+  }
+
+  &.responsive-container {
+    @media only screen and (max-width: 560px) {
+      padding: 0;
+    }
+  }
+
+  @media only screen and (max-width: 1024px) {
+    width: ${(props) => convertWidth(props.width, 1.75)};
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: ${(props) => convertWidth(props.width, 2.25)};
   }
 `;

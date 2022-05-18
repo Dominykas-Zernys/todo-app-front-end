@@ -1,25 +1,55 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button/Button';
 import Header from '../components/Header/Header';
 import Input from '../components/Input/Input';
 import Section from '../components/Section/Section';
 import TaskList from '../components/TaskList/TaskList';
+import { fetchDelete, fetchGet, fetchPost } from '../helpers/fetchFunctions';
+import UserContext, { normalizeTaskDescr } from '../helpers/helperFunctions';
 import pageColors from '../helpers/pageColors';
-
-const tasks = [
-  { id: 1, task: 'do something' },
-  { id: 2, task: 'do something else' },
-  { id: 3, task: 'do something completely else' },
-  { id: 4, task: 'do something completely else and then some' },
-  { id: 5, task: 'do something completely else and then something else' },
-];
 
 const Home = () => {
   const [todo, setTodo] = useState('');
   const [submitFail, setSubmitFail] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [taskArray, setTaskArray] = useState([]);
+  const [checkedTasks, setCheckedTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  function submitHandler(e) {
+  const navigate = useNavigate();
+  const { isLoggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    !isLoggedIn && navigate('../login', { replace: true });
+  }, [isLoggedIn]);
+
+  useEffect(
+    () => async () => {
+      if (!isLoggedIn) {
+        return;
+      }
+      const tasks = await fetchGet('tasks');
+      setLoading(false);
+      Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
+    },
+    [submitSuccess]
+  );
+
+  function handleDeleteClick() {
+    if (!checkedTasks.length) return;
+    checkedTasks.map(async (task) => {
+      const deleteResult = await fetchDelete('tasks/', task);
+      if (deleteResult.success) {
+        setTaskArray((prevState) =>
+          prevState.filter((taskObj) => taskObj.id !== task)
+        );
+        setCheckedTasks([]);
+      }
+    });
+  }
+
+  async function submitHandler(e) {
     setSubmitFail(false);
     setSubmitSuccess(false);
     e.preventDefault();
@@ -27,14 +57,21 @@ const Home = () => {
       setSubmitFail(true);
       return;
     }
-    console.log(todo);
+    const postResult = await fetchPost('tasks', {
+      description: normalizeTaskDescr(todo),
+    });
+    if (!postResult.success) {
+      setSubmitFail(true);
+      return;
+    }
     setSubmitSuccess(true);
     setTodo('');
   }
 
   return (
-    <Section padding='5rem' height='100vh'>
+    <Section className='responsive-container' padding='5rem' height='100vh'>
       <Section
+        className='responsive-wrapper'
         width='50%'
         background={pageColors.background}
         shadow={`10px 10px 10px ${pageColors.shadow}`}
@@ -59,16 +96,31 @@ const Home = () => {
         </form>
 
         {submitFail && (
-          <span className='fail-text absolute'>Something went wrong</span>
+          <span className='fail-text task-submit-text'>
+            {todo.length
+              ? 'Please check if you completed the field correctly'
+              : 'The To-do description cannot be empty'}
+          </span>
         )}
         {submitSuccess && (
-          <span className='success-text absolute'>New to-do added!</span>
+          <span className='success-text task-submit-text'>
+            New to-do added!
+          </span>
         )}
         <Section padding='0.5rem 1rem 0 1rem'>
-          <TaskList tasks={tasks} />
+          {loading ? (
+            <h3>Loading...</h3>
+          ) : (
+            <TaskList
+              tasks={taskArray}
+              setTaskArray={setTaskArray}
+              setCheckedTasks={setCheckedTasks}
+            />
+          )}
         </Section>
         <Section padding='0 0 1rem'>
           <Button
+            handleClick={handleDeleteClick}
             color={pageColors.secondary}
             activeColor={pageColors.secondary}
           >
