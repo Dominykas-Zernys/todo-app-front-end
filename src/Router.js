@@ -18,7 +18,7 @@ const Router = () => {
 
   useEffect(() => {
     checkForToken();
-  }, [isLoggedIn]);
+  }, []);
 
   return (
     <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
