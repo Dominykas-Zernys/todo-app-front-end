@@ -28,7 +28,7 @@ const Home = () => {
       setIsLoggedIn(true);
     }
     !isLoggedIn && navigate('../login', { replace: true });
-  }, [isLoggedIn, navigate, setIsLoggedIn]);
+  }, []);
 
   useEffect(
     () => async () => {
