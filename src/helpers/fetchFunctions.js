@@ -17,9 +17,11 @@ export async function fetchPost(endpoint, data) {
 
 export async function fetchGet(endpoint, setState, state) {
   const token = localStorage.getItem('token');
+  console.log(state);
   const res = await fetch(baseUrl + endpoint, {
     headers: { Authorization: 'Bearer ' + token },
   });
+  console.log(state);
   const resInJson = await res.json();
   console.log(state);
   setState(false);

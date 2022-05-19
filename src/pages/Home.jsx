@@ -27,11 +27,11 @@ const Home = () => {
   }, [isLoggedIn]);
 
   useEffect(
-    () => async () => {
+    () => () => {
       if (!isLoggedIn) {
         return;
       }
-      const tasks = await fetchGet('tasks', setLoading, loading);
+      const tasks = fetchGet('tasks', setLoading, loading);
       // setLoading(false);
       Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
     },
