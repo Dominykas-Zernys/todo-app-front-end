@@ -31,19 +31,6 @@ const Home = () => {
     getTasks();
   }, [submitSuccess, isLoggedIn, loading]);
 
-  // useEffect(
-  //   () => async () => {
-  //     if (!isLoggedIn) {
-  //       setLoading(false);
-  //       return;
-  //     }
-  //     const tasks = await fetchGet('tasks', setLoading);
-  //     setLoading(false);
-  //     Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
-  //   },
-  //   [submitSuccess, isLoggedIn, loading]
-  // );
-
   async function getTasks() {
     if (!isLoggedIn) {
       setLoading(false);
