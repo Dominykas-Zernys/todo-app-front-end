@@ -15,13 +15,15 @@ export async function fetchPost(endpoint, data) {
   return resInJson;
 }
 
-export async function fetchGet(endpoint, setState) {
+export async function fetchGet(endpoint, setState, state) {
   const token = localStorage.getItem('token');
   const res = await fetch(baseUrl + endpoint, {
     headers: { Authorization: 'Bearer ' + token },
   });
   const resInJson = await res.json();
+  console.log(state);
   setState(false);
+  console.log(state);
   return resInJson;
 }
 

@@ -31,7 +31,7 @@ const Home = () => {
       if (!isLoggedIn) {
         return;
       }
-      const tasks = await fetchGet('tasks', setLoading);
+      const tasks = await fetchGet('tasks', setLoading, loading);
       // setLoading(false);
       Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
     },
