@@ -31,6 +31,7 @@ const Home = () => {
       if (!isLoggedIn) {
         return;
       }
+      console.log('veikia loginimas');
       const tasks = await fetchGet('tasks', setLoading, loading);
       setLoading(false);
       Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
