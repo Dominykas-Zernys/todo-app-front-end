@@ -32,10 +32,10 @@ const Home = () => {
         return;
       }
       const tasks = await fetchGet('tasks', setLoading, loading);
-      // setLoading(false);
+      setLoading(false);
       Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
     },
-    [submitSuccess]
+    [submitSuccess, isLoggedIn, loading]
   );
 
   function handleDeleteClick() {
