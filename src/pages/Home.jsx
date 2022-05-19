@@ -24,14 +24,14 @@ const Home = () => {
 
   useEffect(() => {
     !isLoggedIn && navigate('../login', { replace: true });
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 
   useEffect(
     () => async () => {
       if (!isLoggedIn) {
         return;
       }
-      const tasks = await fetchGet('tasks', setLoading, loading);
+      const tasks = await fetchGet('tasks', setLoading);
       setLoading(false);
       Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
     },
