@@ -28,20 +28,31 @@ const Home = () => {
       setIsLoggedIn(true);
     }
     !isLoggedIn && navigate('../login', { replace: true });
-  }, []);
+    getTasks();
+  }, [submitSuccess, isLoggedIn, loading]);
 
-  useEffect(
-    () => async () => {
-      if (!isLoggedIn) {
-        setLoading(false);
-        return;
-      }
-      const tasks = await fetchGet('tasks', setLoading);
+  // useEffect(
+  //   () => async () => {
+  //     if (!isLoggedIn) {
+  //       setLoading(false);
+  //       return;
+  //     }
+  //     const tasks = await fetchGet('tasks', setLoading);
+  //     setLoading(false);
+  //     Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
+  //   },
+  //   [submitSuccess, isLoggedIn, loading]
+  // );
+
+  async function getTasks() {
+    if (!isLoggedIn) {
       setLoading(false);
-      Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
-    },
-    [submitSuccess, isLoggedIn, loading]
-  );
+      return;
+    }
+    const tasks = await fetchGet('tasks', setLoading);
+    setLoading(false);
+    Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
+  }
 
   function handleDeleteClick() {
     checkedTasks.length && setShowPopup(true);
