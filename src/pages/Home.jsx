@@ -20,18 +20,23 @@ const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   const navigate = useNavigate();
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
     !isLoggedIn && navigate('../login', { replace: true });
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate, setIsLoggedIn]);
 
   useEffect(
-    () => () => {
+    () => async () => {
       if (!isLoggedIn) {
+        setLoading(false);
         return;
       }
-      const tasks = fetchGet('tasks', setLoading);
+      const tasks = await fetchGet('tasks', setLoading);
       setLoading(false);
       Array.isArray(tasks.msg) && setTaskArray(tasks.msg);
     },
