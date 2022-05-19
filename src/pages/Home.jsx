@@ -20,7 +20,14 @@ const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   const navigate = useNavigate();
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   useEffect(() => {
     !isLoggedIn && navigate('../login', { replace: true });
